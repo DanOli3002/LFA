@@ -1,0 +1,9 @@
+antlr4-build
+antlr4-test ["hello"] [bananas] se a gramatica dor o hello
+ou
+echo "hello bananas" | antrl4-test -tokens
+[@0,0:4='hello',<'hello'>,1:0]
+[@1,6:8='bananas',<ID>,1:6]
+[@2,10:9='<EOF>',<EOF>,2:0]
+echo "hello Daniel03" | antlr4-test -gui
+para vermos a árvore
