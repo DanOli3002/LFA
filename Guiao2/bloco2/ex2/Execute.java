@@ -28,16 +28,26 @@ public class Execute extends SuffixCalculatorBaseVisitor<Double> {
       Double op2 = visit(ctx.expr(1));
       String op = ctx.op.getText();
 
+      if(op1 == null || op2 == null) {
+         System.err.println("Invalid expression: missing operand(s)");
+         return null;
+      }
       switch (op) {
          case "*":
             return op1 * op2;
          case "/":
-            return op1 / op2;
+            if(op1 == 0 || op2 == 0) {
+               System.err.println("Invalid expression: division by zero");
+               return null;
+            }
+            else {
+               return op1 / op2;
+            }
          case "+":
             return op1 + op2;
          case "-":
             return op1 - op2;
       }
-      return 0.0;
+      return null;
    }
 }
