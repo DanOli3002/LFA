@@ -1,0 +1,8 @@
+antlr4-visitor SuffixCalculator Interpreter.java Double
+antlr4-main -v Interpreter.java
+antlr4-build
+antlr4-run
+e depois fazes ai o seguine:
+2 2 +
+Crt+D
+e deve resultar em 4
