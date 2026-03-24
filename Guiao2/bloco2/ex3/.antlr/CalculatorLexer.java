@@ -1,4 +1,4 @@
-// Generated from /home/tiago/Secretária/Universidade/4ª Matrícula/2º Semestre/Linguagens Formais e Autómatos/Práticas/Bloco 2 Introdução ao ANTLR-20260303/bloco2/b2_03/Calculator.g4 by ANTLR 4.13.1
+// Generated from /home/daniel/Desktop/LFA/Guiao2/bloco2/ex3/Calculator.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
