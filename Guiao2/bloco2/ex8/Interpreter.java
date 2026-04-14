@@ -2,70 +2,67 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("CheckReturnValue")
-public class Interpreter extends CalculatorBaseVisitor<Integer> {
+public class Interpreter extends CalculatorBaseVisitor<String> {
 
    private final Map<String, Integer> vars = new HashMap<>();
 
-   @Override public Integer visitProgram(CalculatorParser.ProgramContext ctx) {
-      return visitChildren(ctx);
-   }
+   @Override public String visitProgram(CalculatorParser.ProgramContext ctx) {
+        StringBuilder out = new StringBuilder();
+        for (var stat : ctx.stat()) {
+            String r = visit(stat);
+            if (r != null && !r.isBlank()) out.append(r).append("\n");
+        }
+        return out.toString();
+    }
 
-   @Override public Integer visitStatAssignment(CalculatorParser.StatAssignmentContext ctx) {
+   @Override public String visitStatAssignment(CalculatorParser.StatAssignmentContext ctx) {
       return visit(ctx.assignment());
    }
 
-   @Override public Integer visitStatExpr(CalculatorParser.StatExprContext ctx) {
+   @Override public String visitStatExpr(CalculatorParser.StatExprContext ctx) {
       if (ctx.expr() != null) {
-         Integer res = visit(ctx.expr());
-         System.out.println(res);
+         return visit(ctx.expr());
       }
       return null;
    }
 
-   @Override public Integer visitAssignment(CalculatorParser.AssignmentContext ctx) {
+   @Override public String visitAssignment(CalculatorParser.AssignmentContext ctx) {
       String id = ctx.ID().getText();
-      Integer value = visit(ctx.expr());
-      vars.put(id, value);
-      return value;
+      String expr = visit(ctx.expr());
+      return id + " = " + expr;
    }
 
-   @Override public Integer visitExprAddSub(CalculatorParser.ExprAddSubContext ctx) {
-      Integer left  = visit(ctx.expr(0));
-      Integer right = visit(ctx.expr(1));
-      if (ctx.op.getText().equals("+")) return left + right;
-      else                              return left - right;
+   @Override public String visitExprAddSub(CalculatorParser.ExprAddSubContext ctx) {
+      String left  = visit(ctx.expr(0));
+      String right = visit(ctx.expr(1));
+      return left + " " + right + " " + ctx.op.getText();
    }
 
-   @Override public Integer visitExprParent(CalculatorParser.ExprParentContext ctx) {
+   @Override public String visitExprParent(CalculatorParser.ExprParentContext ctx) {
       return visit(ctx.expr());
    }
 
-   @Override public Integer visitExprUnary(CalculatorParser.ExprUnaryContext ctx) {
-      Integer val = visit(ctx.expr());
-      if (ctx.op.getText().equals("-")) return -val;
-      else                              return +val;
+   @Override public String visitExprUnary(CalculatorParser.ExprUnaryContext ctx) {
+      String expr = visit(ctx.expr());
+      if (ctx.op.getText().equals("+")) return expr + "!+";
+      else return expr + "!-";
    }
 
-   @Override public Integer visitExprInteger(CalculatorParser.ExprIntegerContext ctx) {
-      return Integer.parseInt(ctx.Integer().getText());
+   @Override public String visitExprInteger(CalculatorParser.ExprIntegerContext ctx) {
+      return ctx.Integer().getText();
    }
 
-   @Override public Integer visitExprId(CalculatorParser.ExprIdContext ctx) {
-      String id = ctx.ID().getText();
-      Integer value = vars.get(id);
-      if (value == null) {
-         throw new RuntimeException("Variavel nao definida: " + id);
-      }
-      return value;
+   @Override public String visitExprId(CalculatorParser.ExprIdContext ctx) {
+      return ctx.ID().getText();
    }
 
-   @Override public Integer visitExprMultDivMod(CalculatorParser.ExprMultDivModContext ctx) {
-      Integer left  = visit(ctx.expr(0));
-      Integer right = visit(ctx.expr(1));
+   @Override public String visitExprMultDivMod(CalculatorParser.ExprMultDivModContext ctx) {
+      String left  = visit(ctx.expr(0));
+      String right = visit(ctx.expr(1));
       switch (ctx.op.getText()) {
-         case "*": return left * right;
-         case "/": return left / right;
-         default:  return left % right;
+         case "*": return left + right + " * ";
+         case "/": return left + right + " / ";
+         default:  return left + right + " % ";
       }
    }
 }
