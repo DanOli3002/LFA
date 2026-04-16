@@ -30,6 +30,13 @@ public interface FracLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatAssignment(FracLangParser.StatAssignmentContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprFrac}
+	 * labeled alternative in {@link FracLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprFrac(FracLangParser.ExprFracContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprParens}
 	 * labeled alternative in {@link FracLangParser#expr}.
 	 * @param ctx the parse tree
@@ -37,12 +44,12 @@ public interface FracLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprParens(FracLangParser.ExprParensContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExprNumber}
+	 * Visit a parse tree produced by the {@code ExprOp}
 	 * labeled alternative in {@link FracLangParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExprNumber(FracLangParser.ExprNumberContext ctx);
+	T visitExprOp(FracLangParser.ExprOpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ExprId}
 	 * labeled alternative in {@link FracLangParser#expr}.
@@ -50,11 +57,4 @@ public interface FracLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExprId(FracLangParser.ExprIdContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ExprFraction}
-	 * labeled alternative in {@link FracLangParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprFraction(FracLangParser.ExprFractionContext ctx);
 }

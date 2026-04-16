@@ -2,79 +2,69 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("CheckReturnValue")
-public class Interpreter extends FracLangBaseVisitor<Integer> {
-   private final Map<String, Integer> variables = new HashMap<>();
+public class Interpreter extends FracLangBaseVisitor<Fraction> {
+   private Map<String,Fraction> variables = new HashMap<>();
 
-   @Override public Integer visitProgram(FracLangParser.ProgramContext ctx) {
-      return visitChildren(ctx);
-   }
-
-   @Override public Integer visitStatDisplay(FracLangParser.StatDisplayContext ctx) {
-      Integer value = visit(ctx.expr());
-      System.out.println(format(value));
-      return null;
-   }
-
-   @Override public Integer visitStatAssignment(FracLangParser.StatAssignmentContext ctx) {
-      Integer value = visit(ctx.expr());
-      variables.put(ctx.ID().getText(), value);
-      return null;
-   }
-   
-   @Override public Integer visitExprParens(FracLangParser.ExprParensContext ctx) {
-      return visit(ctx.expr());
-   }
-
-   @Override public Integer visitExprNumber(FracLangParser.ExprNumberContext ctx) {
-      int n = Integer.parseInt(ctx.NUMBER().getText());
-      return pack(n, 1);
-   }
-
-   @Override public Integer visitExprId(FracLangParser.ExprIdContext ctx) {
-      String id = ctx.ID().getText();
-      Integer value = variables.get(id);
-      if (value == null) {
-         throw new RuntimeException("Semantic error: variable '" + id + "' is not defined");
+   @Override public Fraction visitStatDisplay(FracLangParser.StatDisplayContext ctx) {
+      Fraction res = visit(ctx.expr());
+      if(res != null) {
+         System.out.println(res.toString());
       }
-      return value;
+      return res;
    }
 
-   @Override public Integer visitExprFraction(FracLangParser.ExprFractionContext ctx) {
-      int left = visit(ctx.expr(0));
-      int right = visit(ctx.expr(1));
-
-      return pack(left, right);
-   }
-
-   private static int pack(int numerator, int denominator) {
-      if (denominator == 0) {
-         throw new ArithmeticException("Denominator cannot be zero");
+   @Override public Fraction visitStatAssignment(FracLangParser.StatAssignmentContext ctx) {
+      Fraction res = visit(ctx.expr());
+      if(res != null) {
+         String var = ctx.ID().getText();
+         variables.put(var, res);
       }
+      return res;
+   }
 
-      int n = numerator;
-      int d = denominator;
-      if (d < 0) {
-         n = -n;
-         d = -d;
+   @Override public Fraction visitExprFrac(FracLangParser.ExprFracContext ctx) {
+      Integer left,right;
+      String res = ctx.FRAC().getText();
+      String[] List = res.split("/");
+      if(List.length > 1) {
+         left = Integer.parseInt(List[0]);
+         right = Integer.parseInt(List[1]);
+      } else {
+         left = Integer.parseInt(List[0]);
+         right = 1;
       }
-
-      return (n << 16) | d;
+      Fraction frac = new Fraction(left, right);
+      return frac;
    }
 
-   private static int num(int packed) {
-      return packed >> 16;
+   @Override public Fraction visitExprParens(FracLangParser.ExprParensContext ctx) {
+      Fraction res = visit(ctx.expr());
+      return res;
    }
 
-   private static int den(int packed) {
-      return packed;
-   }
-
-   private static String format(int packed) {
-      int n = num(packed);
-      int d = den(packed);
-      if (d == 1) {
-         return Integer.toString(n);
+   @Override public Fraction visitExprOp(FracLangParser.ExprOpContext ctx) {
+      Fraction left = visit(ctx.expr(0));
+      Fraction right = visit(ctx.expr(1));
+      String op = ctx.op.getText();
+      Fraction res = null;
+      if(op.equals('+')) {
+         res = Fraction.addFraction(left, right);
+      } if(op.equals('-')) {
+         res = Fraction.subFraction(left, right);
+      } if(op.equals('*')) {
+         res = Fraction.mulFraction(left, right);
+      } if(op.equals(':')) {
+         res = Fraction.divFraction(left, right);
       }
-      return n + "/" + d;
+      return res;
+   }
+
+   @Override public Fraction visitExprId(FracLangParser.ExprIdContext ctx) {
+      Fraction var = null;
+      String res = ctx.ID().getText();
+      if(variables.containsKey(res)) {
+         var = variables.get(res);
+      }
+      return var;
    }
 }

@@ -41,6 +41,18 @@ public interface FracLangListener extends ParseTreeListener {
 	 */
 	void exitStatAssignment(FracLangParser.StatAssignmentContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExprFrac}
+	 * labeled alternative in {@link FracLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprFrac(FracLangParser.ExprFracContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprFrac}
+	 * labeled alternative in {@link FracLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprFrac(FracLangParser.ExprFracContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprParens}
 	 * labeled alternative in {@link FracLangParser#expr}.
 	 * @param ctx the parse tree
@@ -53,17 +65,17 @@ public interface FracLangListener extends ParseTreeListener {
 	 */
 	void exitExprParens(FracLangParser.ExprParensContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ExprNumber}
+	 * Enter a parse tree produced by the {@code ExprOp}
 	 * labeled alternative in {@link FracLangParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterExprNumber(FracLangParser.ExprNumberContext ctx);
+	void enterExprOp(FracLangParser.ExprOpContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ExprNumber}
+	 * Exit a parse tree produced by the {@code ExprOp}
 	 * labeled alternative in {@link FracLangParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitExprNumber(FracLangParser.ExprNumberContext ctx);
+	void exitExprOp(FracLangParser.ExprOpContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ExprId}
 	 * labeled alternative in {@link FracLangParser#expr}.
@@ -76,16 +88,4 @@ public interface FracLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExprId(FracLangParser.ExprIdContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ExprFraction}
-	 * labeled alternative in {@link FracLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterExprFraction(FracLangParser.ExprFractionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExprFraction}
-	 * labeled alternative in {@link FracLangParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitExprFraction(FracLangParser.ExprFractionContext ctx);
 }

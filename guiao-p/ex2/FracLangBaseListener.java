@@ -52,6 +52,18 @@ public class FracLangBaseListener implements FracLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExprFrac(FracLangParser.ExprFracContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprFrac(FracLangParser.ExprFracContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprParens(FracLangParser.ExprParensContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -64,13 +76,13 @@ public class FracLangBaseListener implements FracLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExprNumber(FracLangParser.ExprNumberContext ctx) { }
+	@Override public void enterExprOp(FracLangParser.ExprOpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExprNumber(FracLangParser.ExprNumberContext ctx) { }
+	@Override public void exitExprOp(FracLangParser.ExprOpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -83,18 +95,6 @@ public class FracLangBaseListener implements FracLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExprId(FracLangParser.ExprIdContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExprFraction(FracLangParser.ExprFractionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExprFraction(FracLangParser.ExprFractionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
