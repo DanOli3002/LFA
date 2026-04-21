@@ -47,16 +47,26 @@ public class Interpreter extends FracLangBaseVisitor<Fraction> {
       Fraction right = visit(ctx.expr(1));
       String op = ctx.op.getText();
       Fraction res = null;
-      if(op.equals('+')) {
+      if(op.equals("+")) {
          res = Fraction.addFraction(left, right);
-      } if(op.equals('-')) {
+      } if(op.equals("-")) {
          res = Fraction.subFraction(left, right);
-      } if(op.equals('*')) {
+      } if(op.equals("*")) {
          res = Fraction.mulFraction(left, right);
-      } if(op.equals(':')) {
+      } if(op.equals(":")) {
          res = Fraction.divFraction(left, right);
       }
       return res;
+   }
+
+   @Override public Fraction visitExptUni(FracLangParser.ExptUniContext ctx) {
+      Fraction res = visit(ctx.expr());
+      String op = ctx.op.getText();
+      if(op.equals("-")) {
+         return new Fraction(-res.getNumerador(), res.getDenominador());
+      } else {
+         return res;
+      }
    }
 
    @Override public Fraction visitExprId(FracLangParser.ExprIdContext ctx) {

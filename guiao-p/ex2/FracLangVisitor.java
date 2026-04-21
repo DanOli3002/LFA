@@ -51,6 +51,13 @@ public interface FracLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprOp(FracLangParser.ExprOpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExptUni}
+	 * labeled alternative in {@link FracLangParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExptUni(FracLangParser.ExptUniContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprId}
 	 * labeled alternative in {@link FracLangParser#expr}.
 	 * @param ctx the parse tree

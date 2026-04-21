@@ -77,6 +77,18 @@ public interface FracLangListener extends ParseTreeListener {
 	 */
 	void exitExprOp(FracLangParser.ExprOpContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ExptUni}
+	 * labeled alternative in {@link FracLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExptUni(FracLangParser.ExptUniContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExptUni}
+	 * labeled alternative in {@link FracLangParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExptUni(FracLangParser.ExptUniContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprId}
 	 * labeled alternative in {@link FracLangParser#expr}.
 	 * @param ctx the parse tree

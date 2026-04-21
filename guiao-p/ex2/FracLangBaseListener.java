@@ -88,6 +88,18 @@ public class FracLangBaseListener implements FracLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterExptUni(FracLangParser.ExptUniContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExptUni(FracLangParser.ExptUniContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExprId(FracLangParser.ExprIdContext ctx) { }
 	/**
 	 * {@inheritDoc}
